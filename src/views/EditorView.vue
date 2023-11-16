@@ -1,21 +1,22 @@
 <template>
   <div class="editor-container">
-    <div id="ctrl">PROBAR ARCHIVO AQUI</div>
-    <div>{{ testPath }}</div>
+
+    <FileExplorer/>
+
   </div>
 </template>
 
 <script>
-import MenuBar from '@/components/TitleBar.vue';
+import FileExplorer from '@/components/FileExplorer.vue';
 
 
 
 
 export default {
   name:'EditorView',
-  emits:['clicked'],
+  emits:[],
   components:{
-    MenuBar,
+    FileExplorer,
   },
   data() {
     return {
@@ -38,5 +39,5 @@ export default {
 }
 </script>
 
-<style lang='sass'>
+<style lang='scss'>
 </style>

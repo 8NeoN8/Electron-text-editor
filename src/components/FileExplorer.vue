@@ -1,30 +1,143 @@
 <template>
-  <div>
+  <div id="file-explorer" class="file-explorer" resizable='true'>
+
+    <div class="no-drag">
+      <div class="explorer-buttons">
+        <button>file</button>
+        <button>directory</button>
+        <button>refresh</button>
+        <button id="home-path-input">open</button>
+      </div>
+
+      <div class="explorer-current-directory">
+        {{ pathVisible }}
+      </div>
+
+      <!-- <div class="explorer-directories" v-for="(item, index) in items" :key="index">
+      </div> -->
+
+      <FileViewer :fileList="directoryFiles"/>
+    </div>
+
+    <div id="drag" class="drag">
+    </div>
 
   </div>
 </template>
 
 <script>
+import FileViewer from "@/components/FileViewer.vue";
+
+const remote = require("@electron/remote");
+const fs = require('fs')
+const path = require('path')
+
 export default {
-  name:'',
-  components:{},
+  name:'FileExplorer',
+  components:{
+    FileViewer
+  },
+  props:{
+    /* directoryPath:{
+      type: String,
+      default:'C:\\'
+    } */
+  },
   data() {
     return {
-
+      directoryFiles: [],
+      directoryPath: 'C:\\'
     }
   },
-  created(){},
+  computed:{
+    pathVisible(){
+      let visible = this.directoryPath;
+      if(this.directoryPath != 'C:\\') return visible.split('\\').pop()
+      else return 'C\\'
+    }
+  },
+  created(){
+  },
   mounted(){
-    //this.test()
-   },
-  methods:{
-    test(){
-      console.log('Test Function')
-    }
+    this.applyResize()
+    this.setOpenDirectory()
+
   },
-  watch:{}
+  methods:{
+    applyResize(){
+      let p = document.querySelector('#file-explorer'); // element to make resizable
+      /* p.style.minWidth = '10%'
+      p.style.maxWidth = '30%' */
+
+      p.addEventListener('mouseenter', function init() {
+          p.removeEventListener('click', init, false);
+          p.className = p.className + ' resizable';
+          let resizer = document.createElement('div');
+          resizer.className = 'resizer';
+          p.appendChild(resizer);
+          resizer.addEventListener('mousedown', initDrag, false);
+      }, false);
+
+      let startX, startY, startWidth, startHeight;
+
+      function initDrag(e) {
+        startX = e.clientX;
+        //startY = e.clientY;
+        startWidth = parseInt(document.defaultView.getComputedStyle(p).width, 10);
+        //startHeight = parseInt(document.defaultView.getComputedStyle(p).height, 10);
+        document.documentElement.addEventListener('mousemove', doDrag, false);
+        document.documentElement.addEventListener('mouseup', stopDrag, false);
+      }
+
+      function doDrag(e) {
+        p.style.width = (startWidth + e.clientX - startX) + 'px';
+        //p.style.height = (startHeight + e.clientY - startY) + 'px';
+      }
+
+      function stopDrag(e) {
+          document.documentElement.removeEventListener('mousemove', doDrag, false);
+          document.documentElement.removeEventListener('mouseup', stopDrag, false);
+      }
+    },
+    setOpenDirectory(){
+      let input = document.getElementById('home-path-input')
+      input.addEventListener('click', async (event)=>{
+        let homePath = (await remote.dialog.showOpenDialog({properties: ['openDirectory', 'multiSelections']})).filePaths[0]
+        if(homePath) this.directoryPath = homePath
+      })
+    },
+    getDirectoryFiles(dir, fileList = []){
+      fs.readdirSync(dir).forEach(file => {
+        const dirFile = path.join(dir, file);
+        const fileObject = {
+          filePath:dirFile,
+          filename:file,
+          isDiretory: fs.statSync(dirFile).isDirectory()
+        }
+        fileList.push(fileObject)
+        try {
+          fileList = this.getDirectoryFiles(dirFile, fileList);
+        } catch (err) {
+          if (err.code === 'ENOTDIR' || err.code === 'EBUSY') fileList = [...fileList, dirFile];
+          else throw err;
+        }
+      });
+      return fileList;
+    }
+
+  },
+  watch:{
+    directoryPath(){
+      if(this.directoryPath != 'C:\\') {
+          this.directoryFiles = this.getDirectoryFiles(this.directoryPath)
+          //console.log(this.directoryFiles);
+        }
+    }
+  }
 }
 </script>
 
 <style lang='sass'>
+
+@import '../styles/fileExplorer.scss'
 </style>

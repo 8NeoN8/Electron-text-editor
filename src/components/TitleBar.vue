@@ -13,7 +13,7 @@
 
     <div class="title-filename">
       
-      
+      {{ directoryPath }}
       
     </div>
 
@@ -50,6 +50,12 @@ export default {
       currentDate: format(new Date(), 'MM/dd/yy'),
       currentHourMinute: format(new Date(), 'hh:mm aaaa')
     }
+  },
+  props:{
+    directoryPath:{
+      type:String,
+      default:'C:\\'
+    }, 
   },
   computed:{
   },

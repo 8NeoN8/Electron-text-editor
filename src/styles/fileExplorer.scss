@@ -1,0 +1,50 @@
+.file-explorer{
+  background-color: red;
+  min-width: 200px;
+  width: 200px;
+  max-width: 500px;
+  height: calc(100% - 32px);
+  display: flex;
+  overflow-y: auto;
+}
+
+.no-drag{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: cyan;
+  padding: 0.2rem;
+}
+
+.resizer{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 8px;
+  height: 100%;
+  cursor: e-resize;
+  //background-color: red;
+}
+
+.explorer-buttons{
+  background-color: purple;
+  color: red;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0.3rem;
+
+  button{
+    width: 80px;
+  }
+
+}
+ 
+.explorer-current-directory{
+  background-color: gray;
+  color: white;
+  height: 100%;
+  display: block;
+  font-size: 0.8rem;
+  overflow: hidden;
+  white-space: nowrap;
+}

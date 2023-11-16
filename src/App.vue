@@ -1,6 +1,6 @@
 <template>
 
-  <TitleBar/>
+  <TitleBar :directoryPath="directoryPath"/>
 
   <router-view id="main" @clicked="test($event)"/>
 
@@ -31,8 +31,7 @@ document.addEventListener("keydown", event => {
     }
 });
 
-const win = remote.getCurrentWindow(); /* Note this is different to the
-html global `window` variable */
+const win = remote.getCurrentWindow(); /* Note this is different to the html global `window` variable */
 
 // When document has loaded, initialise
 document.onreadystatechange = (event) => {
@@ -93,7 +92,7 @@ export default {
   },
   data() {
     return {
-      
+      directoryPath: null
     }
   },
   methods:{

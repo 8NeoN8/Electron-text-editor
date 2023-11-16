@@ -26,9 +26,10 @@ async function createWindow() {
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
       enableRemoteModule: true,
     }
-
-    
   })
+
+  require('@electron/remote/main').enable(win.webContents)
+  win.loadURL('http://localhost:3000');
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
