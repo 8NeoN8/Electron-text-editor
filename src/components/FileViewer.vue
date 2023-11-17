@@ -41,20 +41,43 @@ export default {
     }
   },
   created(){
-
   },
   mounted(){
-    console.log(this.tempFileList);
   },
   methods:{
+    setSubDirectories(directoryArray){
+      
+    },
+
   },
   watch:{
-    fileList(){
+    tempFileList(){
+      /* let mutFileList = this.tempFileList
+      this.formattdFileList = mutFileList.map((file) => {
+        if(file.isDirectory){
+          mutFileList.forEach(subfile => {
+            if(subfile.filePath.includes(file.filename) && subfile.filePath != file.filePath){
+              file.subDirectories.push(subfile)
+            }
+          });
+        }
+        return file
+      })
+
+
+      this.formattdFileList = this.formattdFileList.forEach(file => {
+        
+      });
+
+
+      console.log("Formatted>>: ",this.formattdFileList); */
+
       console.log(this.tempFileList);
+
+      
     }
   },
   updated(){
-    //console.log(this.tempFileList);
   }
 }
 </script>

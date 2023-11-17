@@ -7,7 +7,7 @@
       </div>
 
       <div class="title-name">
-        Servant of Shield
+        Simplext
       </div>
     </div>
 

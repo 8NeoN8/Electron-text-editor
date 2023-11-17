@@ -107,30 +107,35 @@ export default {
       })
     },
     getDirectoryFiles(dir, fileList = []){
+      
       fs.readdirSync(dir).forEach(file => {
+        if(file == 'node_modules') return
         const dirFile = path.join(dir, file);
-        const fileObject = {
+        let fileObject = {
           filePath:dirFile,
           filename:file,
-          isDiretory: fs.statSync(dirFile).isDirectory()
+          isDirectory: fs.statSync(dirFile).isDirectory(),
+          subDirectories:[],
         }
-        fileList.push(fileObject)
         try {
-          fileList = this.getDirectoryFiles(dirFile, fileList);
+          fileObject.subDirectories = this.getDirectoryFiles(fileObject.filePath, fileObject.subDirectories);
         } catch (err) {
-          if (err.code === 'ENOTDIR' || err.code === 'EBUSY') fileList = [...fileList, dirFile];
+          if (err.code === 'ENOTDIR' || err.code === 'EBUSY' || err.code === 'ENOENT') fileList = [...fileList, dirFile];
           else throw err;
         }
+        fileList.push(fileObject)
       });
-      return fileList;
+      return fileList.filter((file) => typeof(file) == 'object');
     }
 
   },
   watch:{
     directoryPath(){
       if(this.directoryPath != 'C:\\') {
-          this.directoryFiles = this.getDirectoryFiles(this.directoryPath)
-          //console.log(this.directoryFiles);
+          console.time('getDirectoyFiles')
+          this.directoryFiles = this.getDirectoryFiles(this.directoryPath);
+          console.timeEnd('getDirectoyFiles')
+          this.directoryFiles.splice(0,0,'test')
         }
     }
   }
