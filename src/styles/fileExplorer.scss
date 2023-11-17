@@ -1,11 +1,12 @@
 .file-explorer{
   background-color: red;
-  min-width: 200px;
+  min-width: 150px;
   width: 200px;
   max-width: 500px;
   height: calc(100% - 32px);
   display: flex;
-  overflow-y: auto;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .no-drag{
@@ -32,19 +33,27 @@
   display: flex;
   justify-content: space-between;
   padding: 0.3rem 0.3rem;
+  overflow-x: auto;
 
-  button{
-    width: 80px;
-  }
-
+}
+::-webkit-scrollbar{
+  display: none !important;
 }
  
 .explorer-current-directory{
   background-color: gray;
   color: white;
-  height: 100%;
   display: block;
   font-size: 0.8rem;
   overflow: hidden;
   white-space: nowrap;
 }
+
+.file-tree-container{
+  background-color: brown;
+  padding: 0.3rem;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  height: 100%;
+}
+

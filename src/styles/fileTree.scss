@@ -1,0 +1,25 @@
+.file-node{
+  background-color: lime;
+  color: black;
+  margin-bottom: 1rem;
+  width: 100%;
+  width: max-content;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  overflow: hidden;
+  user-select: none;
+}
+.sub-directory-file{
+  background-color: blue;
+  color: white;
+  margin-left: 10px;
+  width: 100%;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  overflow-x: hidden;
+}
+
+.directory-file{
+  background-color: yellow;
+  margin: 0;
+}

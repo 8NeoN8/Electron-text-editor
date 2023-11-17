@@ -13,10 +13,9 @@
         {{ pathVisible }}
       </div>
 
-      <!-- <div class="explorer-directories" v-for="(item, index) in items" :key="index">
-      </div> -->
-
-      <FileViewer :fileList="directoryFiles"/>
+      <div class="file-tree-container">
+        <FileTree v-for="(file, index) in directoryFiles" :key="index" :fileNode="file"/>
+      </div>
     </div>
 
     <div id="drag" class="drag">
@@ -26,7 +25,7 @@
 </template>
 
 <script>
-import FileViewer from "@/components/FileViewer.vue";
+import FileTree from "@/components/FileTree.vue";
 
 const remote = require("@electron/remote");
 const fs = require('fs')
@@ -35,7 +34,7 @@ const path = require('path')
 export default {
   name:'FileExplorer',
   components:{
-    FileViewer
+    FileTree
   },
   props:{
     /* directoryPath:{
@@ -107,7 +106,6 @@ export default {
       })
     },
     getDirectoryFiles(dir, fileList = []){
-      
       fs.readdirSync(dir).forEach(file => {
         if(file == 'node_modules') return
         const dirFile = path.join(dir, file);
@@ -135,7 +133,7 @@ export default {
           console.time('getDirectoyFiles')
           this.directoryFiles = this.getDirectoryFiles(this.directoryPath);
           console.timeEnd('getDirectoyFiles')
-          this.directoryFiles.splice(0,0,'test')
+          //this.directoryFiles.splice(0,0,'test')
         }
     }
   }
