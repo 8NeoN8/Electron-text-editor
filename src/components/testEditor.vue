@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'testEditor',
   watch:{
 
   },
@@ -17,7 +17,6 @@ export default {
       lines.forEach(line => {
         let lineText = line.innerText
         let characters = lineText.split('')
-        console.log(characters[0]);
         if(characters[0] == '#' && characters[1] != '#'){
 
           characters = characters.splice(1)

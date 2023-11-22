@@ -1,0 +1,21 @@
+.file-editor-textarea{
+  width: 100%;
+  height: calc(100vh - 100px);
+  background: grey;
+  border: none;
+  font-size: 18px;
+  font-family: Helvetica;
+}
+
+.file-editor-textarea:active{
+  background: grey !important;
+  border: none !important;
+}
+.file-editor-textarea:hover{
+  background: grey !important;
+  border: none !important;
+}
+.file-editor-textarea:focus{
+  background: grey !important;
+  border: none !important;
+}

@@ -65,12 +65,8 @@ export default {
     }, 60000);
   },
   mounted(){
-    //this.test()
    },
   methods:{
-    test(){
-      console.log('Test Function')
-    },
   },
   watch:{}
 }

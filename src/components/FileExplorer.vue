@@ -14,7 +14,12 @@
       </div>
 
       <div class="file-tree-container">
-        <FileTree v-for="(file, index) in directoryFiles" :key="index" :fileNode="file"/>
+        <FileTree 
+          v-for="(file, index) in directoryFiles" 
+          :key="index" 
+          :fileNode="file"
+          @file-clicked="handleFileClick($event)"
+        />
       </div>
     </div>
 
@@ -33,6 +38,7 @@ const path = require('path')
 
 export default {
   name:'FileExplorer',
+  emits:['file-clicked'],
   components:{
     FileTree
   },
@@ -114,6 +120,7 @@ export default {
           filename:file,
           isDirectory: fs.statSync(dirFile).isDirectory(),
           subDirectories:[],
+          showSubDirectories: false,
         }
         try {
           fileObject.subDirectories = this.getDirectoryFiles(fileObject.filePath, fileObject.subDirectories);
@@ -124,6 +131,9 @@ export default {
         fileList.push(fileObject)
       });
       return fileList.filter((file) => typeof(file) == 'object');
+    },
+    handleFileClick(file){
+      this.$emit('file-clicked',file)
     }
 
   },

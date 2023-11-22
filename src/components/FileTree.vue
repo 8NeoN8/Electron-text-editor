@@ -1,10 +1,26 @@
 <template>
-  <div class="file-node" @click="toggleDirectory(fileNode)">
+  <div 
+    class="file-node" 
+    @click="fileNode.isDirectory ? toggleDirectory(fileNode) : handleFileClick(fileNode)" 
+    :class="fileNode.isDirectory ? 'directory-node' : null"
+  >
+
     {{ fileNode.filename }}
+
   </div>
 
-  <div v-if="fileNode.isDirectory" :class="fileNode.isDirectory ? 'sub-directory-file' : null">
-    <FileTree v-for="(subFile, index) in fileNode.subDirectories" :key="index" :fileNode="subFile"/>
+  <div 
+    v-if="fileNode.isDirectory && fileNode.showSubDirectories" 
+    class="sub-directory-node"
+  >
+
+    <FileTree 
+      v-for="(subFile, index) in fileNode.subDirectories" 
+      :key="index" 
+      :fileNode="subFile"
+      @file-clicked="handleFileClick($event)"
+    />
+
   </div>
 
 </template>
@@ -12,12 +28,13 @@
 <script>
 export default {
   name:'FileTree',
+  emits:['file-clicked'],
   components:{
   },
   props:{
     fileNode:{
       type: Object,
-      default: {},
+      default: null,
     }
   },
   data() {
@@ -37,12 +54,15 @@ export default {
   },
   methods:{
     toggleDirectory(file){
-      if(file.isDirectory) console.log('clicked a directory');
+      file.showSubDirectories = !file.showSubDirectories
+    },
+    handleFileClick(file){
+      this.$emit('file-clicked',file)
     }
   },
   watch:{
     tempFileNode(){
-      console.log(this.tempFile);
+      //console.log(this.tempFile);
     }
   },
   updated(){

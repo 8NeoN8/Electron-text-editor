@@ -16,7 +16,7 @@ import TitleBar from "@/components/TitleBar.vue";
 const remote = require("@electron/remote");
 window.addEventListener('resize', event => {
   if (remote.getCurrentWindow().isFullScreen()) {
-      console.log('full');
+      //console.log('full');
     }
 })
 
@@ -45,29 +45,29 @@ window.onbeforeunload = (event) => {
     (DOM element listeners get auto garbage collected but not
     Electron win listeners as the win is not dereferenced unless closed) */
     win.removeAllListeners();
-    console.log('removing listeners');
+    //console.log('removing listeners');
 }
 
 function handleWindowControls() {
     // Make minimise/maximise/restore/close buttons work when they are clicked
     document.getElementById('minimize-button').addEventListener("click", event => {
         win.minimize();
-        console.log('minimize');
+        //console.log('minimize');
     });
 
     document.getElementById('maximize-button').addEventListener("click", event => {
         win.maximize();
-        console.log('maximize');
+        //console.log('maximize');
     });
 
     document.getElementById('restore-button').addEventListener("click", event => {
         win.unmaximize();
-        console.log('unmaximize');
+        //console.log('unmaximize');
     });
 
     document.getElementById('close-button').addEventListener("click", event => {
-      console.log('close');
-        win.close()
+      //console.log('close');
+      win.close()
     });
 
     // Toggle maximise/restore buttons when maximisation/unmaximisation occurs
