@@ -140,9 +140,9 @@ export default {
   watch:{
     directoryPath(){
       if(this.directoryPath != 'C:\\') {
-          console.time('getDirectoyFiles')
+          //console.time('getDirectoyFiles')
           this.directoryFiles = this.getDirectoryFiles(this.directoryPath);
-          console.timeEnd('getDirectoyFiles')
+          //console.timeEnd('getDirectoyFiles')
           //this.directoryFiles.splice(0,0,'test')
         }
     }

@@ -19,3 +19,39 @@
   background: grey !important;
   border: none !important;
 }
+
+.opened-file-editor{
+  height: calc(100vh - 10rem);
+  background-color: grey;
+  overflow: scroll;
+  display: flex;
+  font-size: 20px;
+  line-height: 23px
+}
+
+.code-editor{
+  all:unset;
+  display:block; 
+  white-space: pre-wrap;
+  text-wrap: nowrap;
+  font-family: monospace;
+  font-weight: 600;
+  padding: 1rem;
+  min-width: 200px;
+  min-height: 200px;
+  width:100%;
+  height:100%;
+  background-color: rgb(183, 183, 183);
+}
+
+.line-nums{
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+  height: 100%;
+  background-color: green;
+  color: white;
+  padding-top: 1rem;
+  padding-right: 0.3rem;
+  text-align: right;
+}
